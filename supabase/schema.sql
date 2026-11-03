@@ -48,6 +48,7 @@ create table if not exists public.messes (
     address text,
     currency text not null default 'BDT',
     invite_code text unique not null,
+    logo text,
     month_start_day int not null default 1 check (month_start_day between 1 and 28),
     breakfast_unit numeric(3,2) not null default 1.00,
     lunch_unit numeric(3,2) not null default 1.00,
@@ -57,6 +58,9 @@ create table if not exists public.messes (
     created_at timestamptz default now(),
     updated_at timestamptz default now()
 );
+
+-- Ensure logo column exists if table was already created
+alter table public.messes add column if not exists logo text;
 
 -- 4. MESS MEMBERS TABLE
 create table if not exists public.mess_members (
